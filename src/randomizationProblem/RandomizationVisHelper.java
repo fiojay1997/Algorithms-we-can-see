@@ -1,4 +1,4 @@
-package template;
+package randomizationProblem;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -7,9 +7,9 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.lang.InterruptedException;
 
-public class AlgoVisHelper {
+public class RandomizationVisHelper {
 
-    private AlgoVisHelper() {
+    private RandomizationVisHelper() {
     }
 
     public static final Color Red = new Color(0xF44336);

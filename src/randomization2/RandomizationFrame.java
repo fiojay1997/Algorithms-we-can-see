@@ -1,14 +1,15 @@
-package template;
+package randomization2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
-public class AlgoFrame extends JFrame {
+public class RandomizationFrame extends JFrame {
 
     private final int canvasWidth;
     private final int canvasHeight;
 
-    public AlgoFrame(String title, int canvasWidth, int canvasHeight) {
+    public RandomizationFrame(String title, int canvasWidth, int canvasHeight) {
         super(title);
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -21,7 +22,7 @@ public class AlgoFrame extends JFrame {
         this.setVisible(true);
     }
 
-    public AlgoFrame(String title) {
+    public RandomizationFrame(String title) {
         this(title, 800, 800);
     }
 
@@ -33,9 +34,11 @@ public class AlgoFrame extends JFrame {
         return this.canvasHeight;
     }
 
-    private Object data;
-    public void render(Object data) {
-        this.data = data;
+    private Circle circle;
+    private LinkedList<Point> points;
+    public void render(Circle circle, LinkedList<Point> points) {
+        this.circle = circle;
+        this.points = points;
         this.repaint();
     }
 
@@ -57,7 +60,18 @@ public class AlgoFrame extends JFrame {
             hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
             g2d.addRenderingHints(hints);
 
-            AlgoVisHelper.setColor(g2d, AlgoVisHelper.Blue);
+            RandomVisHelper.setStrokeWidth(g2d, 3);
+            RandomVisHelper.setColor(g2d, RandomVisHelper.Blue);
+            RandomVisHelper.strokeCircle(g2d, circle.getX(), circle.getY(), circle.getR());
+
+            for (int i = 0; i < points.size(); i++) {
+                Point p = points.get(i);
+                if (circle.contain(p))
+                    RandomVisHelper.setColor(g2d, RandomVisHelper.Red);
+                else
+                    RandomVisHelper.setColor(g2d, RandomVisHelper.Green);
+                RandomVisHelper.fillCircle(g2d, p.x, p.y, 3);
+            }
         }
 
         @Override

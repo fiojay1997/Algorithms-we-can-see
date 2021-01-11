@@ -1,14 +1,16 @@
-package template;
+package randomizationProblem;
+
+import template.AlgoVisHelper;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class AlgoFrame extends JFrame {
+public class RandomizationFrame extends JFrame {
 
     private final int canvasWidth;
     private final int canvasHeight;
 
-    public AlgoFrame(String title, int canvasWidth, int canvasHeight) {
+    public RandomizationFrame(String title, int canvasWidth, int canvasHeight) {
         super(title);
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -21,7 +23,7 @@ public class AlgoFrame extends JFrame {
         this.setVisible(true);
     }
 
-    public AlgoFrame(String title) {
+    public RandomizationFrame(String title) {
         this(title, 800, 800);
     }
 
@@ -33,9 +35,9 @@ public class AlgoFrame extends JFrame {
         return this.canvasHeight;
     }
 
-    private Object data;
-    public void render(Object data) {
-        this.data = data;
+    private int[] money;
+    public void render(int[] money) {
+        this.money = money;
         this.repaint();
     }
 
@@ -57,7 +59,16 @@ public class AlgoFrame extends JFrame {
             hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
             g2d.addRenderingHints(hints);
 
-            AlgoVisHelper.setColor(g2d, AlgoVisHelper.Blue);
+            int w = canvasWidth / money.length;
+            for (int i = 0; i < money.length; i++) {
+                if (money[i] > 0) {
+                    RandomizationVisHelper.setColor(g2d, RandomizationVisHelper.Blue);
+                    AlgoVisHelper.fillRectangle(g2d, i * w, canvasHeight / 2 - money[i], w - 1, money[i]);
+                } else if (money[i] < 0) {
+                    RandomizationVisHelper.setColor(g2d, RandomizationVisHelper.Red);
+                    AlgoVisHelper.fillRectangle(g2d, i * w, canvasHeight / 2, w - 1, - money[i]);
+                }
+            }
         }
 
         @Override
