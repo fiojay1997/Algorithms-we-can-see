@@ -34,11 +34,9 @@ public class RandomizationFrame extends JFrame {
         return this.canvasHeight;
     }
 
-    private Circle circle;
-    private LinkedList<Point> points;
-    public void render(Circle circle, LinkedList<Point> points) {
-        this.circle = circle;
-        this.points = points;
+    private MonteCarloPiData data;
+    public void render(MonteCarloPiData data) {
+        this.data = data;
         this.repaint();
     }
 
@@ -60,12 +58,13 @@ public class RandomizationFrame extends JFrame {
             hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
             g2d.addRenderingHints(hints);
 
+            Circle circle = data.getCircle();
             RandomVisHelper.setStrokeWidth(g2d, 3);
             RandomVisHelper.setColor(g2d, RandomVisHelper.Blue);
             RandomVisHelper.strokeCircle(g2d, circle.getX(), circle.getY(), circle.getR());
 
-            for (int i = 0; i < points.size(); i++) {
-                Point p = points.get(i);
+            for (int i = 0; i < data.getPointsNumber(); i++) {
+                Point p = data.getPoint(i);
                 if (circle.contain(p))
                     RandomVisHelper.setColor(g2d, RandomVisHelper.Red);
                 else
